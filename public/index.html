@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Login and Signup</title>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1 style="font-family: 'Comic Sans MS'; font-size: 25px">Feel the pulse of your brand on Twitter!</h1>
+        </div>
+        <div class="blurry-box">
+            <div class="toggle-buttons">
+                <button class="toggle-btn" data-section="signup">Signup</button>
+                <button class="toggle-btn active" data-section="login">Login</button>
+                
+            </div>
+            <div class="form-section signup">
+                <input id="name" type="text" placeholder="Name">
+                <input id="mail" type="email" placeholder="Email">
+                <input id="username" type="text" placeholder="Username">
+                <input id="password" type="password" placeholder="Password">
+                <div class="spice"><a href="forgotpassword">Forget Password?</a></div>
+                <button class="signup-btn">Signup</button>
+            </div>
+            <div class="form-section login active">
+                <input type="text" placeholder="Username OR Email">
+                <input type="password" placeholder="Password">
+                <div class="spice"><a href="forgotpassword">Forget Password?</a></div>
+                <button class="login-btn">Login</button>
+</div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

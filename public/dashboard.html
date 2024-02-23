@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style0.css">
+<title>Power BI-like Tool</title>
+<style>
+
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="top-box box" id="query">Query</div>
+    <div class="top-box box" id="totwit">Total tweets fetched</div>
+    <div class="top-box box" id="totpos">Total positive score</div>
+    <div class="top-box box" id="totneg">Total negative score</div>
+    <div class="top-box box" id="totnet">Total neutral score</div>
+    <div class="top-box box" id="top">Logged In</div>
+    <div class="graph box">Likes on Positive V/S Timeline<canvas id="myChart" style="width:100%;max-width:600px"></canvas>    </div>
+    <div class="graph box">Likes on Neutral V/S Timeline<canvas id="myChart2" style="width:100%;max-width:600px"></canvas></div>
+    <div class="graph box">Likes on Negative V/S Timeline<canvas id="myChart3" style="width:100%;max-width:600px"></canvas></div>
+    <div class="graph box">Empty 1</div>
+    <div class="graph box"><canvas id="myChart5" style="width:100%;max-width:600px"></canvas>    </div>
+    <div class="graph box">Empty 2</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+
+tweetobj=JSON.parse(localStorage.getItem("graph_data"))
+total_tweets=tweetobj.length
+posobj=[]
+netobj=[]
+negobj=[]
+function count(obj){
+    for(i=0;i<total_tweets;i++){
+        if (tweetobj[i]['sentiment']=="positive"){posobj.push(tweetobj[i])}
+        else if (tweetobj[i]['sentiment']=="negative"){negobj.push(tweetobj[i])}
+        else if (tweetobj[i]['sentiment']=="neutral"){netobj.push(tweetobj[i])}
+    }
+}
+count(tweetobj)
+
+function sortDateStrings(dateStrings) {
+  // Convert date strings to Date objects
+  let dates = dateStrings.map(dateString => new Date(dateString));
+
+  // Sort the Date objects
+  dates.sort((a, b) => a - b);
+
+  // Convert sorted Date objects back to date strings
+  let sortedDateStrings = dates.map(date => date.toString());
+
+  return sortedDateStrings;
+}
+function convertDateFormat(dateString) {
+  // Create a Date object from the input string
+  let date = new Date(dateString);
+
+  // Extract the month, day, and year from the Date object
+  let month = date.getMonth() + 1; // Add 1 because getMonth() returns 0-based index
+  let day = date.getDate();
+  let year = date.getFullYear() % 100; // Get last two digits of the year
+
+  // Pad month, day, and year with leading zeros if needed
+  month = month < 10 ? "0" + month : month;
+  day = day < 10 ? "0" + day : day;
+  year = year < 10 ? "0" + year : year;
+
+  // Return the formatted date string
+  return `${month}/${day}/${year}`;
+}
+
+function processData(data) {
+  // Extract likes and times arrays
+  const likesArray = data.map(item => item.likes);
+  const timesArray = data.map(item => new Date(item.time));
+
+  return { likesArray, timesArray };
+}
+
+function replaceElements(array) {
+  // Check if the array has more than two elements
+  if (array.length > 2) {
+    // Replace all elements except the first and last with empty strings
+    for (let i = 1; i < array.length - 1; i++) {
+      array[i] = "";
+    }
+  }
+  return array;
+}
+function addp(divid,text){
+    const div = document.getElementById(divid);
+    const p = document.createElement('p');function processData(data) {
+      // Get all the likes and sort them
+      const likesArray = data.map(item => item.likes).sort((a, b) => a - b);
+    
+      // Get the corresponding times and sort them based on the likes order
+      const timesArray = data
+        .sort((a, b) => likesArray.indexOf(a.likes) - likesArray.indexOf(b.likes))
+        .map(item => item.time);
+    
+      return { likesArray, timesArray };
+    }
+    p.textContent = text;
+    div.appendChild(p);
+}
+addp("totwit",total_tweets)
+addp("totpos",posobj.length)
+addp("totneg",negobj.length)
+addp("totnet",netobj.length)
+addp("query",localStorage.getItem('query'))
+
+a=replaceElements(processData(posobj)["timesArray"])
+a[0]=convertDateFormat(a[0])
+a[a.length-1]=convertDateFormat(a[a.length-1])
+
+var yValues = processData(posobj)["likesArray"]
+var xValues = a
+
+new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 6, max:Math.ceil(Math.max(...yValues) / 10) * 10}}],
+    }
+  }
+});
+
+a=replaceElements(processData(netobj)["timesArray"])
+a[0]=convertDateFormat(a[0])
+a[a.length-1]=convertDateFormat(a[a.length-1])
+
+var yValues = processData(netobj)["likesArray"]
+var xValues = a
+
+new Chart("myChart2", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 6, max:Math.ceil(Math.max(...yValues) / 10) * 10}}],
+    }
+  }
+});
+
+a=replaceElements(processData(negobj)["timesArray"])
+a[0]=convertDateFormat(a[0])
+a[a.length-1]=convertDateFormat(a[a.length-1])
+
+var yValues = processData(negobj)["likesArray"]
+var xValues = a
+
+new Chart("myChart3", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: yValues
+    }]
+  },
+  options: {
+    legend: {display: false},
+    scales: {
+      yAxes: [{ticks: {min: 6, max:Math.ceil(Math.max(...yValues) / 10) * 10}}],
+    }
+  }
+});
+const xValues1 = ["Positive","Negative","Neutral"];
+const yValues1 = [posobj.length,netobj.length,negobj.length];
+const barColors = [
+  "#14adad",
+  "#46e2e2",
+  "#92eded"
+];
+
+new Chart("myChart5", {
+  type: "pie",
+  data: {
+    labels: xValues1,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues1
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Sentiment Partitions"
+    }
+  }
+});
+
+</script>
+</body>
+</html>

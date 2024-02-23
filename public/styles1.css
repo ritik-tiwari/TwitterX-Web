@@ -1,0 +1,151 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: url('background-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    width: 80%;
+}
+
+.blurry-box.notes-box {
+    height: 60%;
+    width: 60%;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin: 0 auto;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+.notes-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.note-box {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: calc(33.33% - 20px);
+    text-align: center;
+}
+
+.add-note-button {
+    background: #007BFF;
+    color: #fff;
+    border-radius: 50%;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+.no{
+    margin-left: auto;
+margin-right: auto;
+    font-family: 'Comic Sans MS';
+    text-align: center;
+}
+.navigation-buttons {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 150px;
+}
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #007BFF;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+}
+
+#logout-button {
+    background: #FF0000; /* Change the color for the logout button */
+    transform: translateX(10px);
+    
+}
+
+#create-button {
+    transform: translateX(-10px);
+    
+}
+.tex{
+    color:#007BFF
+}
+input {
+    margin: 10px;
+    padding: 10px;
+    width: 100%;
+    max-width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.otp-btn{
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.otp-btn:hover{
+    background: #0056b3;
+}
+.spice{
+    height: 20px;
+}
+button.disabled {
+    background: grey;
+    cursor: not-allowed;
+  }
+  
+  button.disabled:hover {
+    background: grey;
+  }
+  #sp1{
+    display: block;
+  }
+  button{
+    background: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover{
+    background: #0056b3;
+}
