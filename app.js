@@ -44,7 +44,7 @@ function generateOTP() {
 
 app.use(cors());
 // Connect to MongoDB (Make sure MongoDB is running)
-mongoose.connect('mongodb://localhost:27017/mydatabase', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://prakash34we1:gauzer7612@cluster0.lvigvny.mongodb.net/mydatabase?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true });
 app.use(express.static('public'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/forgotpassword', (req, res) => {

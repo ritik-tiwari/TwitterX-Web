@@ -1,3 +1,8 @@
+function logout(){
+  localStorage.clear();
+  location.replace("..")
+}
+localStorage.setItem('graph_data','')
 function checkTokenValidity() {
     const token = localStorage.getItem('Token');
   
@@ -62,7 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 // Store the JSON response in localStorage
-                localStorage.setItem("graph_data", JSON.stringify(data));
+                localStorage.setItem("graph_data", JSON.stringify(data["data"]));
+                localStorage.setItem("tweets", JSON.stringify(data["tweets"]));
                 location.replace("dashboard")
                 // Update the message
                
